@@ -1,0 +1,11 @@
+@mixin generic-text(
+  $font-size: 16px,
+  $font-weight: 400,
+  $line-height: 18px,
+  $font-color: "black"
+) {
+  font-size: $font-size;
+  font-weight: $font-weight;
+  color: $font-color;
+  line-height: $line-height;
+}
