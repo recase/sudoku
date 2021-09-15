@@ -1,1 +1,14 @@
-<p>main works!</p>
+<div class="main-container">
+  <div class="game-container">
+    <app-sudoku class="sudoku" [sudoku]="sudoku"></app-sudoku>
+  </div>
+  <div class="side-container">
+    <div class="timer-container">
+      <div class="time">00:57s</div>
+    </div>
+    <div class="main-action-container">
+      <div class="paused">paused</div>
+      <div class="hint">hint</div>
+    </div>
+  </div>
+</div>
