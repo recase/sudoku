@@ -1,0 +1,64 @@
+@keyframes wiggle {
+  0% {
+    transform: rotate(2deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.sudoku-contianer {
+  box-sizing: border-box;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .row {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px dotted gray;
+    flex: 1;
+
+    .column {
+      display: flex;
+      border-right: 1px dotted gray;
+      flex: 1;
+
+      .block-item {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .column:nth-child(3n) {
+      border-right: 1px solid black;
+    }
+
+    .column:last-child {
+      border-right: none;
+    }
+  }
+
+  .row:nth-child(3n) {
+    border-bottom: 1px solid black;
+  }
+  .row:last-child {
+    border-bottom: none;
+  }
+}
+
+// .sudoku-contianer:hover {
+//   animation-name: wiggle;
+//   animation-duration: 0.2s;
+//   animation: wiggle 0.2 ease-in-out 0 3;
+// }
