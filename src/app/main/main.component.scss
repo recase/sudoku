@@ -5,12 +5,43 @@
   .game-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 70vw;
-    .sudoku {
-      height: 450px;
+    .sudoku-container {
       width: 450px;
+      height: 450px;
       min-width: 300px;
       min-height: 300px;
+
+      .sudoku {
+        width: 100%;
+      }
+    }
+    .action-group {
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+
+      .action-btn {
+        text-transform: capitalize;
+        margin-right: 12px;
+      }
+
+      .action-btn:last-child {
+        margin-right: none;
+      }
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      width: 450px;
+      min-width: 300px;
+
+      .num-button {
+        width: 17%;
+      }
     }
   }
 

@@ -1,6 +1,18 @@
 <div class="main-container">
   <div class="game-container">
-    <app-sudoku class="sudoku" [sudoku]="sudoku"></app-sudoku>
+    <div class="sudoku-container">
+      <app-sudoku class="sudoku" [sudoku]="sudoku"></app-sudoku>
+    </div>
+    <div class="action-group">
+      <button mat-raised-button class="action-btn">undo</button>
+      <button mat-raised-button class="action-btn">erase</button>
+      <button mat-raised-button class="action-btn">note</button>
+    </div>
+    <div class="button-group">
+      <div class="num-button" *ngFor="let num of num_buttons">
+        <app-num-button [buttonText]="num"></app-num-button>
+      </div>
+    </div>
   </div>
   <div class="side-container">
     <div class="timer-container">
