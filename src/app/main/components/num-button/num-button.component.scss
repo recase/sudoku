@@ -1,0 +1,14 @@
+@import "../../../../styles.scss";
+
+.button-num {
+  @include generic-text($font-size-xl, $medium, $font-size-xl);
+  height: 40px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 1px 0px 4px 0px rgb(0 0 0 / 50%);
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
