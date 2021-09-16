@@ -1,7 +1,7 @@
 <div class="sudoku-contianer">
   <div class="row" *ngFor="let row of sudoku; let rowIndex = index">
-    <div class="column" *ngFor="let block of row; let columnIndex = index">
-      <app-cell class="block-item" [block]="block"></app-cell>
+    <div class="column" *ngFor="let cell of row; let columnIndex = index">
+      <app-cell class="block-item" [cell]="cell"></app-cell>
     </div>
   </div>
 </div>

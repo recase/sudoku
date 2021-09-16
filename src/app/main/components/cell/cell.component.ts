@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Cell } from 'src/app/interfaces/interface';
 
 @Component({
   selector: 'app-cell',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./cell.component.scss'],
 })
 export class CellComponent implements OnInit {
-  @Input() block!: number;
+  @Input() cell!: Cell;
 
   constructor() {}
 
