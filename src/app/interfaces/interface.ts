@@ -1,6 +1,7 @@
 export interface Cell {
   notes: number[];
-  value: number | null;
+  value: number;
+  changeable: boolean;
 }
 export interface CellIndex {
   rowIndex: number;
