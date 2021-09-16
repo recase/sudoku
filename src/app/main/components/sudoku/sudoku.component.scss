@@ -1,4 +1,60 @@
+@import "../../../../styles.scss";
+
 @keyframes wiggle {
+  0% {
+    transform: rotate(2deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@-webkit-keyframes wiggle {
+  0% {
+    transform: rotate(2deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@-moz-keyframes wiggle {
+  0% {
+    transform: rotate(2deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@-o-keyframes wiggle {
   0% {
     transform: rotate(2deg);
   }
@@ -18,7 +74,8 @@
 
 .sudoku-contianer {
   box-sizing: border-box;
-  border: 1px solid black;
+  box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.75);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -26,22 +83,23 @@
   .row {
     display: flex;
     flex-direction: row;
-    border-bottom: 1px dotted gray;
+    border-bottom: 1px dotted $gray;
     flex: 1;
 
     .column {
       display: flex;
-      border-right: 1px dotted gray;
+      border-right: 1px dotted $gray;
       flex: 1;
 
       .block-item {
+        border-radius: inherit;
         width: 100%;
         height: 100%;
       }
     }
 
     .column:nth-child(3n) {
-      border-right: 1px solid black;
+      border-right: 1px solid $black;
     }
 
     .column:last-child {
@@ -49,16 +107,33 @@
     }
   }
 
+  .row:first-child {
+    .column:last-child {
+      border-radius: 0 8px 0 0;
+    }
+    .column:first-child {
+      border-radius: 8px 0 0;
+    }
+  }
+
   .row:nth-child(3n) {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $black;
   }
   .row:last-child {
     border-bottom: none;
+
+    .column:first-child {
+      border-radius: 0 0 0 8px;
+    }
+    .column:last-child {
+      border-radius: 0 0 8px 0;
+    }
   }
 }
 
-// .sudoku-contianer:hover {
-//   animation-name: wiggle;
-//   animation-duration: 0.2s;
-//   animation: wiggle 0.2 ease-in-out 0 3;
-// }
+.error-sudoku {
+  animation: wiggle 0.2 ease-in-out 0 3;
+  -webkit-animation: wiggle 0.2 ease-in-out 0 3;
+  -moz-animation: wiggle 0.2 ease-in-out 0 3;
+  -o-animation: wiggle 0.2 ease-in-out 0 3;
+}
