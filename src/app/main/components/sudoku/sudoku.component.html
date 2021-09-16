@@ -1,7 +1,11 @@
-<div class="sudoku-contianer">
+<div class="sudoku-contianer" [ngClass]="{ 'error-sudoku': errorFlag }">
   <div class="row" *ngFor="let row of sudoku; let rowIndex = index">
     <div class="column" *ngFor="let cell of row; let columnIndex = index">
-      <app-cell class="block-item" [cell]="cell"></app-cell>
+      <app-cell
+        class="block-item"
+        [cell]="cell"
+        (click)="cellSelected(rowIndex, columnIndex)"
+      ></app-cell>
     </div>
   </div>
 </div>
