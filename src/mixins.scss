@@ -2,10 +2,27 @@
   $font-size: 16px,
   $font-weight: 400,
   $line-height: 18px,
-  $font-color: "black"
+  $font-color: black
 ) {
   font-size: $font-size;
   font-weight: $font-weight;
   color: $font-color;
   line-height: $line-height;
+}
+
+@mixin align($vertical: false, $horizontal: false, $position: relative) {
+  position: $position;
+  @if $vertical {
+    top: 50%;
+  }
+  @if $horizontal {
+    left: 50%;
+  }
+  @if $vertical and $horizontal {
+    transform: translate(-50%, -50%);
+  } @else if $vertical {
+    transform: translateY(-50%);
+  } @else if $horizontal {
+    transform: translateX(-50%);
+  }
 }
