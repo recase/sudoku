@@ -1,22 +1,36 @@
 <div class="main-container">
   <div class="game-container">
     <div class="sudoku-container">
-      <app-sudoku class="sudoku" [sudoku]="sudoku"></app-sudoku>
+      <app-sudoku class="sudoku" [noteFlag]="noteFlag"></app-sudoku>
     </div>
     <div class="action-group">
-      <button mat-raised-button class="action-btn">undo</button>
-      <button mat-raised-button class="action-btn">erase</button>
-      <button mat-raised-button class="action-btn">note</button>
+      <button mat-raised-button class="action-btn" (click)="undoEvent()">
+        undo
+      </button>
+      <button mat-raised-button class="action-btn" (click)="eraseEvent()">
+        erase
+      </button>
+      <button
+        mat-raised-button
+        class="action-btn"
+        [ngClass]="{ 'active-btn': noteFlag }"
+        (click)="toggleNote()"
+      >
+        note
+      </button>
     </div>
     <div class="button-group">
       <div class="num-button" *ngFor="let num of num_buttons">
-        <app-num-button [buttonText]="num"></app-num-button>
+        <app-num-button
+          [buttonText]="num"
+          (btnEvent)="inputEvent(num)"
+        ></app-num-button>
       </div>
     </div>
   </div>
   <div class="side-container">
     <div class="timer-container">
-      <div class="time">00:57s</div>
+      <div class="time"></div>
     </div>
     <div class="main-action-container">
       <div class="paused">paused</div>

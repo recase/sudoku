@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Cell } from '../interfaces/interface';
-import { SudokuService } from '../services/sudoku.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SudokuComponent } from './components/sudoku/sudoku.component';
 
 @Component({
   selector: 'app-main',
@@ -8,26 +7,24 @@ import { SudokuService } from '../services/sudoku.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  // public sudoku = [
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //   [9, 8, 7, 6, 5, 4, 3, 2, 1],
-  // ];
-  public sudoku: Cell[][];
-
+  @ViewChild(SudokuComponent) sudokuComponent!: SudokuComponent;
   public num_buttons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  public noteFlag: boolean = false;
 
-  constructor(private sudokuService: SudokuService) {
-    this.sudoku = this.sudokuService.generateSudoku();
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  public inputEvent(num: number) {
+    this.sudokuComponent.inputEvent(num);
   }
-
-  ngOnInit(): void {
-    console.log(this.sudoku);
+  public toggleNote(): void {
+    this.noteFlag = !this.noteFlag;
+  }
+  public undoEvent() {
+    this.sudokuComponent.undoEvent();
+  }
+  public eraseEvent() {
+    this.sudokuComponent.eraseEvent();
   }
 }
