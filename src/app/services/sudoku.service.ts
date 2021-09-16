@@ -8,13 +8,13 @@ export class SudokuService {
   constructor() {}
 
   public generateSudoku(): Cell[][] {
-    let sudoku = this.generateInitialSudoku();
+    const sudoku = this.generateInitialSudoku();
     return this.generateCompleteSudoku(sudoku);
   }
 
   // to fill the random column with numbers
   private generateInitialSudoku(): Cell[][] {
-    let initial: Cell[][] = [];
+    const initial: Cell[][] = [];
     const randomColumnIndex = this.generateRandomNumber();
     const assignedNumber: number[] = [];
     for (let i = 0; i < 9; i++) {
@@ -39,11 +39,10 @@ export class SudokuService {
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         const result = this.generateUniqueToCell(sudoku, i, j);
-        const value = result.result;
         i = result.row;
         j = result.column;
 
-        sudoku[i][j].value = value;
+        sudoku[i][j].value = result.result;
       }
     }
     return sudoku;
@@ -57,12 +56,15 @@ export class SudokuService {
   ): { result: number; row: number; column: number } {
     const uniquIndex = this.retriveUniqueIndices(row, column);
     const assignedValues = uniquIndex.map((item) => {
-      if (sudoku[item.rowIndex][item.columnIndex]?.value) {
+      if (
+        !(row === item.rowIndex && column === item.columnIndex) &&
+        sudoku[item.rowIndex][item.columnIndex]?.value
+      ) {
         return sudoku[item.rowIndex][item.columnIndex].value;
       }
       return;
     });
-    let value = sudoku[row][column].value || 1;
+    const value = sudoku[row][column].value || 1;
     const result = this.checkUnique(value, assignedValues);
     if (result == -1) {
       sudoku[row][column].value = null;
@@ -72,6 +74,11 @@ export class SudokuService {
       } else {
         column -= 1;
       }
+      let previousValue = sudoku[row][column].value;
+      if (previousValue) {
+        previousValue += 1;
+      }
+      sudoku[row][column].value = previousValue;
       return this.generateUniqueToCell(sudoku, row, column);
     } else {
       return { result, row, column };
