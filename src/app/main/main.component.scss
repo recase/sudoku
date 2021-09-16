@@ -1,3 +1,5 @@
+@import "../../styles.scss";
+
 .main-container {
   display: flex;
   height: 100%;
@@ -26,6 +28,11 @@
       .action-btn {
         text-transform: capitalize;
         margin-right: 12px;
+      }
+
+      .active-btn {
+        color: $background;
+        background-color: $blue;
       }
 
       .action-btn:last-child {
