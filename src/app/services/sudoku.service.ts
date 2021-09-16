@@ -37,6 +37,8 @@ export class SudokuService {
           value: 0,
           changeable: true,
           notes: [],
+          highlight: false,
+          selected: false,
         };
       } else {
         invalidRemoveIndices.push(index);
@@ -87,6 +89,8 @@ export class SudokuService {
           value,
           notes: [],
           changeable: false,
+          highlight: false,
+          selected: false,
         };
       }
     }
@@ -162,7 +166,7 @@ export class SudokuService {
   }
 
   // retrieve the indices to have unique values
-  private retriveUniqueIndices(
+  public retriveUniqueIndices(
     rowIndex: number,
     columnIndex: number
   ): CellIndex[] {
