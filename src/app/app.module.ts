@@ -8,6 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { MainComponent } from './main/main.component';
 import { SudokuComponent } from './main/components/sudoku/sudoku.component';
 import { CellComponent } from './main/components/cell/cell.component';
+import { NumButtonComponent } from './main/components/num-button/num-button.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,14 @@ import { CellComponent } from './main/components/cell/cell.component';
     MainComponent,
     SudokuComponent,
     CellComponent,
+    NumButtonComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
