@@ -1,12 +1,47 @@
 @import "../../../../styles.scss";
 
-.block-container {
-  @include generic-text($font-size-xl, $bold, $font-size-xl);
-  box-sizing: border-box;
-  padding: 6px;
+.container {
+  border-radius: inherit;
   height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+
+  .value {
+    @include generic-text($font-size-xl, $bold, $font-size-xl);
+    @include align(true, true, absolute);
+    cursor: default;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    div {
+      flex: 0 0 33.33%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      opacity: 0.7;
+      line-height: 12px;
+    }
+  }
+  .cell-selected-value {
+    color: $royal-blue;
+  }
+}
+
+.cell-higlight {
+  background-color: $gossip;
+}
+
+.cell-selected {
+  background-color: $lightcyan;
+}
+
+.cell-error {
+  .value {
+    color: $red;
+  }
 }

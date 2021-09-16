@@ -1,3 +1,19 @@
-<div class="block-container">
-  {{ cell.value }}
+<div
+  class="container"
+  [ngClass]="{
+    'cell-higlight': cell.highlight,
+    'cell-selected': cell.selected,
+    'cell-error': cell.error
+  }"
+>
+  <div
+    *ngIf="cell.value"
+    class="value"
+    [ngClass]="{ 'cell-selected-value': cell.selectedValue }"
+  >
+    {{ cell.value }}
+  </div>
+  <div *ngIf="!cell.value" class="options">
+    <div class="label" *ngFor="let option of cell.notes">{{ option }}</div>
+  </div>
 </div>
