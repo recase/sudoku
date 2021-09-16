@@ -7,9 +7,67 @@ import { Cell, CellIndex } from '../interfaces/interface';
 export class SudokuService {
   constructor() {}
 
-  public generateSudoku(): Cell[][] {
-    const sudoku = this.generateInitialSudoku();
-    return this.generateCompleteSudoku(sudoku);
+  public generateSudoku(emptyCell: number): {
+    validSudoku: Cell[][];
+    solvedSudoku: Cell[][];
+  } {
+    const initialSudoku = this.generateInitialSudoku();
+    const { sudoku, solveable } = this.generateCompleteSudoku(initialSudoku);
+    const solvedSudoku = JSON.parse(JSON.stringify(sudoku));
+
+    const validSudoku = this.retrieveUniquePuzzle(sudoku, emptyCell);
+    return { validSudoku, solvedSudoku };
+  }
+
+  // get unique solution puzzle
+  private retrieveUniquePuzzle(sudoku: Cell[][], emptyCell: number): Cell[][] {
+    const validRemoveIndices: CellIndex[] = [];
+    const invalidRemoveIndices: CellIndex[] = [];
+    while (validRemoveIndices.length < emptyCell) {
+      const index: CellIndex = this.generateRandomCell(
+        validRemoveIndices,
+        invalidRemoveIndices
+      );
+      const temp_sudoku = JSON.parse(JSON.stringify(sudoku));
+      const result = this.checkPuzzleUniqueness(temp_sudoku, index);
+
+      if (result) {
+        validRemoveIndices.push(index);
+        sudoku[index.rowIndex][index.columnIndex] = {
+          value: 0,
+          changeable: true,
+          notes: [],
+        };
+      } else {
+        invalidRemoveIndices.push(index);
+      }
+    }
+    return sudoku;
+  }
+
+  // checks the uniqueness of the puzzle
+  private checkPuzzleUniqueness(
+    temp_sudoku: Cell[][],
+    index: CellIndex
+  ): boolean {
+    let hasUniqueSolution = true;
+    const initialValue = temp_sudoku[index.rowIndex][index.columnIndex].value;
+    temp_sudoku[index.rowIndex][index.columnIndex].changeable = true;
+    let startValue = 1;
+    do {
+      temp_sudoku[index.rowIndex][index.columnIndex].value = startValue;
+      const { sudoku, solveable } = this.generateCompleteSudoku(
+        temp_sudoku,
+        true
+      );
+      if (solveable && startValue != initialValue) {
+        hasUniqueSolution = false;
+        break;
+      }
+      startValue++;
+    } while (startValue < 9);
+
+    return hasUniqueSolution;
   }
 
   // to fill the random column with numbers
@@ -20,7 +78,7 @@ export class SudokuService {
     for (let i = 0; i < 9; i++) {
       initial[i] = [];
       for (let j = 0; j < 9; j++) {
-        let value = null;
+        let value = 0;
         if (j == randomColumnIndex - 1) {
           value = this.generateRandomNumber(assignedNumber);
           assignedNumber.push(value);
@@ -28,6 +86,7 @@ export class SudokuService {
         initial[i][j] = {
           value,
           notes: [],
+          changeable: false,
         };
       }
     }
@@ -35,25 +94,35 @@ export class SudokuService {
   }
 
   // generate complete sudoku from the initial sudoku
-  private generateCompleteSudoku(sudoku: Cell[][]) {
-    for (let i = 0; i < 9; i++) {
+  private generateCompleteSudoku(
+    sudoku: Cell[][],
+    solveFlag: boolean = false
+  ): { sudoku: Cell[][]; solveable: boolean } {
+    let solveable = true;
+    outer_loop: for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        const result = this.generateUniqueToCell(sudoku, i, j);
+        const result = this.generateUniqueToCell(sudoku, i, j, solveFlag);
+        if (!result.result) {
+          solveable = false;
+          break outer_loop;
+        }
         i = result.row;
         j = result.column;
 
         sudoku[i][j].value = result.result;
       }
     }
-    return sudoku;
+    return { sudoku, solveable };
   }
 
   // solve sudoku usign the backtracking algorithm
   private generateUniqueToCell(
     sudoku: Cell[][],
     row: number,
-    column: number
+    column: number,
+    solveFlag: boolean = false
   ): { result: number; row: number; column: number } {
+    let solveable = true;
     const uniquIndex = this.retriveUniqueIndices(row, column);
     const assignedValues = uniquIndex.map((item) => {
       if (
@@ -67,18 +136,25 @@ export class SudokuService {
     const value = sudoku[row][column].value || 1;
     const result = this.checkUnique(value, assignedValues);
     if (result == -1) {
-      sudoku[row][column].value = null;
-      if (column == 0) {
-        row -= 1;
-        column = 8;
-      } else {
-        column -= 1;
+      sudoku[row][column].value = 0;
+      loop: do {
+        if (row === 0 && column === 0) {
+          solveable = false;
+          break loop;
+        }
+        if (column == 0) {
+          row -= 1;
+          column = 8;
+        } else {
+          column -= 1;
+        }
+        if (!solveFlag || sudoku[row][column].changeable) {
+          sudoku[row][column].value += 1;
+        }
+      } while (solveFlag && !sudoku[row][column].changeable);
+      if (!solveable) {
+        return { result: 0, row, column };
       }
-      let previousValue = sudoku[row][column].value;
-      if (previousValue) {
-        previousValue += 1;
-      }
-      sudoku[row][column].value = previousValue;
       return this.generateUniqueToCell(sudoku, row, column);
     } else {
       return { result, row, column };
@@ -130,6 +206,32 @@ export class SudokuService {
       return this.generateRandomNumber(assignedList);
     } else {
       return randomNumber;
+    }
+  }
+
+  private generateRandomCell(
+    validIndices: CellIndex[],
+    invalidIndices: CellIndex[]
+  ): CellIndex {
+    let cellIndex: CellIndex;
+    const rowIndex = this.generateRandomNumber() - 1;
+    const columnIndex = this.generateRandomNumber() - 1;
+    cellIndex = { rowIndex, columnIndex };
+    if (
+      validIndices.some(
+        (b) =>
+          b.rowIndex == cellIndex.rowIndex &&
+          b.columnIndex == cellIndex.columnIndex
+      ) ||
+      invalidIndices.some(
+        (b) =>
+          b.rowIndex == cellIndex.rowIndex &&
+          b.columnIndex == cellIndex.columnIndex
+      )
+    ) {
+      return this.generateRandomCell(validIndices, invalidIndices);
+    } else {
+      return cellIndex;
     }
   }
 }
