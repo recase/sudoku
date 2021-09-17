@@ -59,6 +59,19 @@
     align-items: center;
     width: 30vw;
 
+    .alert-container {
+      .alert {
+        mat-icon {
+          font-size: 52px;
+          height: 52px;
+          width: 52px;
+          -webkit-animation: wiggle 0.5s ease-out infinite normal;
+          -moz-animation: wiggle 0.5s ease-out infinite normal;
+          animation: wiggle 0.5s ease-out infinite normal;
+        }
+      }
+    }
+
     .timer-container {
       position: relative;
       height: 200px;
@@ -92,6 +105,13 @@
         width: 110px;
         border-radius: 50%;
         background-color: rgba($color: $moody-blue, $alpha: 1);
+      }
+
+      .alert-ring-one {
+        background-color: rgba($color: $mandy, $alpha: 0.6);
+      }
+      .alert-ring-two {
+        background-color: rgba($color: $mandy, $alpha: 1);
       }
 
       .time {

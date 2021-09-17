@@ -4,6 +4,7 @@
       <app-sudoku
         class="sudoku"
         [noteFlag]="noteFlag"
+        [level]="level"
         (gameCompletedEvent)="gameCompletedEvent()"
       ></app-sudoku>
     </div>
@@ -33,17 +34,24 @@
     </div>
   </div>
   <div class="side-container">
+    <div class="alert-container">
+      <div class="alert" *ngIf="timeChallengeFlag && timeLimitAlert">
+        <mat-icon class="alert-icon">alarm</mat-icon>
+      </div>
+    </div>
     <div class="timer-container">
       <div
         class="timer-ring-one"
         [ngClass]="{
-          'ring-animation': !paused && ringAnimation
+          'ring-animation': !paused && ringAnimation,
+          'alert-ring-one': timeLimitAlert
         }"
       ></div>
       <div
         class="timer-ring-two"
         [ngClass]="{
-          'inner-ring-animation': !paused && ringAnimation
+          'inner-ring-animation': !paused && ringAnimation,
+          'alert-ring-two': timeLimitAlert
         }"
       ></div>
       <div class="time">
