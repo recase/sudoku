@@ -1,0 +1,26 @@
+@import "../../../../styles.scss";
+
+.challenge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px;
+
+  .label {
+    @include generic-text($font-size-xxl, $medium, $font-size-xxl);
+    margin-bottom: 12px;
+  }
+
+  .timelabel {
+    @include generic-text($font-size-l, $medium, $font-size-l, $red);
+  }
+
+  .action-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+  }
+}
