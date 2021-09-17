@@ -213,9 +213,9 @@ export class SudokuService {
     }
   }
 
-  private generateRandomCell(
-    validIndices: CellIndex[],
-    invalidIndices: CellIndex[]
+  public generateRandomCell(
+    validIndices: CellIndex[] = [],
+    invalidIndices: CellIndex[] = []
   ): CellIndex {
     let cellIndex: CellIndex;
     const rowIndex = this.generateRandomNumber() - 1;
