@@ -1,4 +1,12 @@
-<div class="main-container" [ngClass]="{ 'main-container-paused': paused }">
+<div
+  class="main-container"
+  [ngClass]="{
+    'main-container-paused': paused,
+    'easy-level': level === levelTypes.Easy,
+    'difficult-level': level === levelTypes.Difficult,
+    'challenge-level': level === levelTypes.TimeChallenge
+  }"
+>
   <div class="game-container">
     <div class="sudoku-container">
       <app-sudoku
@@ -34,6 +42,7 @@
     </div>
   </div>
   <div class="side-container">
+    <div class="level-container">Level: {{ level }}</div>
     <div class="alert-container">
       <div class="alert" *ngIf="timeChallengeFlag && timeLimitAlert">
         <mat-icon class="alert-icon">alarm</mat-icon>
@@ -54,7 +63,7 @@
           'alert-ring-two': timeLimitAlert
         }"
       ></div>
-      <div class="time">
+      <div class="time" [ngClass]="{ 'warnning-time': timeLimitAlert }">
         {{ timerDisplay }}
       </div>
     </div>
@@ -83,6 +92,9 @@
     <div class="label">Paused</div>
     <button mat-raised-button class="action-btn" (click)="togglePaused(false)">
       <mat-icon class="play-icon">play_arrow</mat-icon>
+    </button>
+    <button mat-raised-button class="back-btn" (click)="homePage()">
+      <mat-icon>home</mat-icon>Menu
     </button>
   </div>
 </div>

@@ -1,5 +1,14 @@
 @import "../../styles.scss";
 
+@keyframes color-changer {
+  from {
+    color: $black;
+  }
+  to {
+    color: $red;
+  }
+}
+
 .main-container {
   display: flex;
   height: 100%;
@@ -59,7 +68,12 @@
     align-items: center;
     width: 30vw;
 
+    .level-container {
+      @include generic-text($font-size-xxl, $medium, $font-size-xxl);
+    }
+
     .alert-container {
+      margin-top: 12px;
       .alert {
         mat-icon {
           font-size: 52px;
@@ -136,6 +150,16 @@
   filter: blur(3px) brightness(0.9);
 }
 
+.easy-level {
+  background: radial-gradient(#d2eaf3, transparent);
+}
+.challenge-level {
+  background: radial-gradient(#ffadad, transparent);
+}
+.difficult-level {
+  background: radial-gradient(#f8ffad7d, transparent);
+}
+
 .paused-container {
   position: absolute;
   top: 0;
@@ -162,6 +186,77 @@
 
       .play-icon {
         transform: scale(2.5);
+      }
+    }
+    .back-btn {
+      margin-top: 24px;
+      height: 80px;
+      width: 120px;
+    }
+  }
+}
+
+@media screen and(max-width:858px) {
+  .main-container {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: space-around;
+
+    .game-container {
+      .sudoku-container {
+        width: 80vw;
+        height: 80vw;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 350px;
+        max-height: 350px;
+      }
+
+      .button-group {
+        width: 85vw;
+        min-width: 85vw;
+      }
+    }
+
+    .side-container {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 95vw;
+
+      .level-container {
+        font-size: $font-size-m;
+      }
+
+      .alert-container {
+        display: none;
+      }
+
+      .timer-container {
+        height: auto;
+        width: auto;
+        .timer-ring-one,
+        .timer-ring-two {
+          display: none;
+        }
+
+        .time {
+          color: $black;
+        }
+
+        .warnning-time {
+          -webkit-animation: color-changer 0.5s ease-out infinite normal;
+          -moz-animation: color-changer 0.5s ease-out infinite normal;
+          animation: color-changer 0.5s ease-out infinite normal;
+        }
+      }
+
+      .main-action-container {
+        display: flex;
+        flex-direction: column-reverse;
+
+        .action-btn:first-child {
+          margin-top: 18px;
+        }
       }
     }
   }

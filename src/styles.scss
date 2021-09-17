@@ -15,4 +15,10 @@ body {
   .complete-modal {
     width: 40vw;
   }
+
+  @media screen and(max-width:858px) {
+    .complete-modal {
+      width: 90vw;
+    }
+  }
 }
