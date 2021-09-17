@@ -1,3 +1,5 @@
+import { LevelTypes } from '../enums/enum';
+
 export interface Cell {
   notes: number[];
   value: number;
@@ -17,12 +19,19 @@ export interface CellHistory {
   cell: Cell;
 }
 
-export interface TimeData {
+export interface modalData {
   time: number;
   bestTime: number;
+  level: LevelTypes;
 }
 
 export interface TimeRecord {
-  easy: number;
-  difficult: number;
+  easy: number | null;
+  difficult: number | null;
+}
+
+export interface starCount {
+  one: boolean;
+  two: boolean;
+  three: boolean;
 }
