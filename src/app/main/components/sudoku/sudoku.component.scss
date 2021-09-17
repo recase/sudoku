@@ -1,60 +1,42 @@
 @import "../../../../styles.scss";
 
-@keyframes wiggle {
-  0% {
-    transform: rotate(2deg);
-  }
-  25% {
-    transform: rotate(-2deg);
-  }
-  50% {
-    transform: rotate(2deg);
-  }
-  75% {
-    transform: rotate(-2deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
 @-webkit-keyframes wiggle {
   0% {
-    transform: rotate(2deg);
+    -webkit-transform: rotate(2deg);
   }
   25% {
-    transform: rotate(-2deg);
+    -webkit-transform: rotate(-2deg);
   }
   50% {
-    transform: rotate(2deg);
+    -webkit-transform: rotate(2deg);
   }
   75% {
-    transform: rotate(-2deg);
+    -webkit-transform: rotate(-2deg);
   }
   100% {
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
   }
 }
 
 @-moz-keyframes wiggle {
   0% {
-    transform: rotate(2deg);
+    -ms-transform: rotate(2deg);
   }
   25% {
-    transform: rotate(-2deg);
+    -ms-transform: rotate(-2deg);
   }
   50% {
-    transform: rotate(2deg);
+    -ms-transform: rotate(2deg);
   }
   75% {
-    transform: rotate(-2deg);
+    -ms-transform: rotate(-2deg);
   }
   100% {
-    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
   }
 }
 
-@-o-keyframes wiggle {
+@keyframes wiggle {
   0% {
     transform: rotate(2deg);
   }
@@ -132,8 +114,7 @@
 }
 
 .error-sudoku {
-  animation: wiggle 0.2 ease-in-out 0 3;
-  -webkit-animation: wiggle 0.2 ease-in-out 0 3;
-  -moz-animation: wiggle 0.2 ease-in-out 0 3;
-  -o-animation: wiggle 0.2 ease-in-out 0 3;
+  -webkit-animation: wiggle 0.2s ease-in-out;
+  -moz-animation: wiggle 0.2s ease-in-out;
+  animation: wiggle 0.2s ease-in-out;
 }
