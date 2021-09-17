@@ -1,15 +1,15 @@
 <div class="complete-container">
-  <div class="cheer-label">Congratulations</div>
+  <div class="cheer-label">{{ cheereLabel }}</div>
   <div class="trophy">
     <img src="../../../../assets/images/trophy.svg" alt="trophy-icon" />
   </div>
-  <div class="time-record" *ngIf="newRecord">New Record</div>
-  <div class="star-container">
+  <div class="time-record" *ngIf="!challengeFlag && newRecord">New Record</div>
+  <div class="star-container" *ngIf="!challengeFlag">
     <div class="star" [ngClass]="{ 'active-star': starGain.one }"></div>
     <div class="star" [ngClass]="{ 'active-star': starGain.two }"></div>
     <div class="star" [ngClass]="{ 'active-star': starGain.three }"></div>
   </div>
-  <div class="time-container">
+  <div class="time-container" *ngIf="!challengeFlag">
     <div class="time">
       <div class="label">
         Time: <span [ngClass]="{ 'best-time': newRecord }">{{ time }}</span>
