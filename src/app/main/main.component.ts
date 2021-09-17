@@ -15,6 +15,7 @@ import { StateService } from '../services/state.service';
 import { LevelTypes } from '../enums/enum';
 import { take } from 'rxjs/operators';
 import { ChallengeFailedComponent } from './modals/challenge-failed/challenge-failed.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -43,15 +44,16 @@ export class MainComponent implements OnInit, OnDestroy {
   private timeLimitSubscription!: Subscription;
 
   @HostListener('window:blur', ['$event']) onBlur(event: FocusEvent): void {
-    if (!this.gameCompletedFlag) {
-      this.paused = true;
-    }
+    // if (!this.gameCompletedFlag) {
+    //   this.paused = true;
+    // }
   }
 
   constructor(
     private dialog: MatDialog,
     private timeService: TimeToStringService,
-    private stateService: StateService
+    private stateService: StateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -186,6 +188,14 @@ export class MainComponent implements OnInit, OnDestroy {
       panelClass: 'complete-modal',
       disableClose: true,
     });
+  }
+
+  get levelTypes() {
+    return LevelTypes;
+  }
+
+  public homePage(): void {
+    this.router.navigate(['']);
   }
 
   private unsubscribeTimer() {
