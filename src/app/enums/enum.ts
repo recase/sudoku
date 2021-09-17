@@ -1,7 +1,7 @@
 export enum LevelTypes {
-  Easy = 'easy',
-  Difficult = 'difficult',
-  TimeChallenge = 'time challenge',
+  Easy = 'Easy',
+  Difficult = 'Difficult',
+  TimeChallenge = 'Challenge',
 }
 
 export enum emptyBlock {
