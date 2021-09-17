@@ -16,3 +16,13 @@ export interface CellHistory {
   index: CellIndex;
   cell: Cell;
 }
+
+export interface TimeData {
+  time: number;
+  bestTime: number;
+}
+
+export interface TimeRecord {
+  easy: number;
+  difficult: number;
+}
