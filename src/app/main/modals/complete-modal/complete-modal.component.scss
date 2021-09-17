@@ -1,0 +1,101 @@
+@import "../../../../styles.scss";
+
+.complete-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .cheer-label {
+    @include generic-text(
+      $font-size-xxl,
+      $medium,
+      $font-size-xxl,
+      $school-bus-yellow
+    );
+    margin-bottom: 12px;
+  }
+
+  .trophy {
+    img {
+      height: 40px;
+    }
+  }
+
+  .time-record {
+    @include generic-text(
+      $font-size-l,
+      $normal,
+      $font-size-l,
+      $school-bus-yellow
+    );
+    margin-bottom: 8px;
+  }
+
+  .star-container {
+    .star {
+      position: relative;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: 16px;
+      margin-right: 16px;
+      margin-bottom: 24px;
+
+      border-right: 10px solid transparent;
+      border-bottom: 20px solid $gray-nickel;
+      border-left: 10px solid transparent;
+
+      font-size: 24px;
+
+      &:before,
+      &:after {
+        content: "";
+
+        display: block;
+        width: 0;
+        height: 0;
+
+        position: absolute;
+        top: 12px;
+        left: -24px;
+
+        border-right: 24px solid transparent;
+        border-bottom: 16px solid $gray-nickel;
+        border-left: 24px solid transparent;
+
+        transform: rotate(-35deg);
+      }
+
+      &:after {
+        transform: rotate(35deg);
+      }
+    }
+    .active-star {
+      -webkit-animation: scale-animation 0.6s ease-out 3 normal;
+      -moz-animation: scale-animation 0.6s ease-out 3 normal;
+      animation: scale-animation 0.6s ease-out 3 normal;
+      border-bottom: 20px solid $school-bus-yellow;
+    }
+    .active-star::before,
+    .active-star::after {
+      border-bottom: 16px solid $school-bus-yellow;
+    }
+  }
+
+  .time-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .time {
+      .best-time {
+        color: $school-bus-yellow;
+      }
+    }
+  }
+
+  .action-container {
+    margin-top: 12px;
+  }
+}

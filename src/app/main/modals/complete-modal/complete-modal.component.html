@@ -1,0 +1,29 @@
+<div class="complete-container">
+  <div class="cheer-label">Congratulations</div>
+  <div class="trophy">
+    <img src="../../../../assets/images/trophy.svg" alt="trophy-icon" />
+  </div>
+  <div class="time-record" *ngIf="newRecord">New Record</div>
+  <div class="star-container">
+    <div class="star" [ngClass]="{ 'active-star': starGain.one }"></div>
+    <div class="star" [ngClass]="{ 'active-star': starGain.two }"></div>
+    <div class="star" [ngClass]="{ 'active-star': starGain.three }"></div>
+  </div>
+  <div class="time-container">
+    <div class="time">
+      <div class="label">
+        Time: <span [ngClass]="{ 'best-time': newRecord }">{{ time }}</span>
+      </div>
+    </div>
+    <div class="time">
+      <div class="label">
+        Best time: <span class="best-time">{{ bestTime }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="action-container">
+    <button mat-raised-button (click)="navigateToMenu()">
+      <mat-icon>home</mat-icon>Menu
+    </button>
+  </div>
+</div>
