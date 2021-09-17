@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { emptyBlock, LevelTypes } from 'src/app/enums/enum';
 import { Cell, CellHistory, CellIndex } from 'src/app/interfaces/interface';
 import { SudokuService } from 'src/app/services/sudoku.service';
 
@@ -9,6 +10,7 @@ import { SudokuService } from 'src/app/services/sudoku.service';
 })
 export class SudokuComponent implements OnInit {
   @Input() public noteFlag: boolean = false;
+  @Input() public level: LevelTypes = LevelTypes.Easy;
   @Output() public gameCompletedEvent: EventEmitter<null> = new EventEmitter();
   public sudoku: Cell[][];
   private solvedSudoku: Cell[][];
@@ -21,12 +23,23 @@ export class SudokuComponent implements OnInit {
   private errorTimeOut!: any;
 
   constructor(private sudokuService: SudokuService) {
-    const { validSudoku, solvedSudoku } = this.sudokuService.generateSudoku(2);
+    const emptySpace = this.getLevelSpace();
+    const { validSudoku, solvedSudoku } =
+      this.sudokuService.generateSudoku(emptySpace);
     this.sudoku = validSudoku;
     this.solvedSudoku = solvedSudoku;
   }
 
   ngOnInit(): void {}
+
+  private getLevelSpace(): number {
+    if (this.level === LevelTypes.Easy) {
+      return emptyBlock.Easy;
+    } else if (this.level === LevelTypes.Difficult) {
+      return emptyBlock.Difficult;
+    }
+    return emptyBlock.TimeChallenge;
+  }
 
   public cellSelected(rowIndex: number, columnIndex: number): void {
     this.resetSelected();
