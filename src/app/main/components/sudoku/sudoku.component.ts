@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Cell, CellHistory, CellIndex } from 'src/app/interfaces/interface';
 import { SudokuService } from 'src/app/services/sudoku.service';
 
@@ -9,6 +9,7 @@ import { SudokuService } from 'src/app/services/sudoku.service';
 })
 export class SudokuComponent implements OnInit {
   @Input() public noteFlag: boolean = false;
+  @Output() public gameCompletedEvent: EventEmitter<null> = new EventEmitter();
   public sudoku: Cell[][];
   private solvedSudoku: Cell[][];
   public cellSelectedFlag: boolean = false;
@@ -20,7 +21,7 @@ export class SudokuComponent implements OnInit {
   private errorTimeOut!: any;
 
   constructor(private sudokuService: SudokuService) {
-    const { validSudoku, solvedSudoku } = this.sudokuService.generateSudoku(36);
+    const { validSudoku, solvedSudoku } = this.sudokuService.generateSudoku(2);
     this.sudoku = validSudoku;
     this.solvedSudoku = solvedSudoku;
   }
@@ -105,6 +106,9 @@ export class SudokuComponent implements OnInit {
     this.gameCompletedFlag = this.sudoku.every((row) =>
       row.every((cell) => cell.value && !cell.error)
     );
+    if (this.gameCompletedFlag) {
+      this.gameCompletedEvent.emit();
+    }
   }
 
   private toggleNoteValue(notes: number[], num: number): number[] {
@@ -143,7 +147,7 @@ export class SudokuComponent implements OnInit {
     this.errorFlag = true;
     this.errorTimeOut = setTimeout(() => {
       this.errorFlag = false;
-    }, 500);
+    }, 5000);
   }
 
   public undoEvent(): void {
@@ -171,10 +175,17 @@ export class SudokuComponent implements OnInit {
     }
   }
 
-  // public continueGameEvent(flag: boolean): void {
-  //   this.gameInProgress = flag;
-  //   if (!this.sudoku.length) {
-  //     this.createNewSudoku();
-  //   }
-  // }
+  public showHint(): void {
+    const searchIndex: CellIndex[] = [];
+    while (1) {
+      const cellIndex = this.sudokuService.generateRandomCell(searchIndex);
+      searchIndex.push(cellIndex);
+      if (this.sudoku[cellIndex.rowIndex][cellIndex.columnIndex].changeable) {
+        this.sudoku[cellIndex.rowIndex][cellIndex.columnIndex].value =
+          this.solvedSudoku[cellIndex.rowIndex][cellIndex.columnIndex].value;
+        this.cellSelected(cellIndex.rowIndex, cellIndex.columnIndex);
+        break;
+      }
+    }
+  }
 }
