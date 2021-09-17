@@ -4,4 +4,49 @@
   background-color: $background;
   height: 100%;
   width: 100%;
+  .title-container {
+    width: 100vw;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .title {
+      @include generic-text($font-size-xxxl, $bold, $font-size-xxxl);
+    }
+  }
+
+  .game-container {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    .control-container {
+      width: 500px;
+      min-height: 400px;
+    }
+
+    .stats-container {
+      width: 250px;
+      .image-container {
+        height: 40px;
+        width: 40px;
+      }
+
+      .record-level {
+        @include generic-text($font-size-xl, $medium, $font-size-xl);
+        margin: 12px 0;
+      }
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 12px;
+      height: 250px;
+      border-radius: 12px;
+      box-shadow: 1px 2px 8px 2px rgba(0, 0, 0, 0.7);
+    }
+  }
 }

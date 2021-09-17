@@ -1,0 +1,58 @@
+<div class="main-contianer">
+  <div class="title-container"><div class="title">SUDOKU</div></div>
+  <div class="game-container">
+    <div class="container control-container">
+      <div class="level-container">
+        Level:
+        <mat-form-field appearance="fill">
+          <mat-label>Choose an level</mat-label>
+          <mat-select
+            (selectionChange)="levelSelected($event.value)"
+            [(ngModel)]="selectedLevel"
+          >
+            <mat-option *ngFor="let level of levels" [value]="level.value">{{
+              level.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="time-container" *ngIf="showTimeInput">
+        <mat-form-field appearance="fill" floatLabel="always">
+          <mat-label>Time</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="timeLimit"
+            min="1"
+            placeholder="Time in minutes"
+          />
+        </mat-form-field>
+      </div>
+      <div class="action-container">
+        <button mat-raised-button (click)="play()">
+          <mat-icon>play_arrow</mat-icon> Play
+        </button>
+      </div>
+    </div>
+    <div class="container stats-container">
+      <div class="image-container">
+        <img src="../../assets/images/trophy.svg" alt="trophy" />
+      </div>
+      <div class="record-level">Records</div>
+      <div class="no-record" *ngIf="!recordFound">No records available</div>
+      <div class="records" *ngIf="recordFound">
+        <div class="record">
+          <div class="lebel">
+            Easy : <span *ngIf="easyBestTime">{{ easyBestTime }}</span>
+          </div>
+        </div>
+        <div class="record">
+          <div class="lebel">
+            Difficult :
+            <span *ngIf="difficultBestTime">{{ difficultBestTime }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
