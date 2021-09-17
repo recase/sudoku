@@ -1,5 +1,53 @@
 @import "../../styles.scss";
 
+@-webkit-keyframes scale-animation {
+  0% {
+    -webkit-transform: scale(1);
+  }
+  25% {
+    -webkit-transform: scale(1.1);
+  }
+  60% {
+    -webkit-transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-moz-keyframes scale-animation {
+  0% {
+    -ms-transform: scale(1);
+  }
+  25% {
+    -ms-transform: scale(1.1);
+  }
+  60% {
+    -ms-transform: scale(1);
+  }
+  100% {
+    -ms-transform: scale(1);
+  }
+}
+
+@keyframes scale-animation {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .main-container {
   display: flex;
   height: 100%;
@@ -58,5 +106,91 @@
     justify-content: center;
     align-items: center;
     width: 30vw;
+
+    .timer-container {
+      position: relative;
+      height: 200px;
+      width: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .ring-animation {
+        -webkit-animation: scale-animation 1s ease-out infinite normal;
+        -moz-animation: scale-animation 1s ease-out infinite normal;
+        animation: scale-animation 1s ease-out infinite normal;
+      }
+
+      .inner-ring-animation {
+        -webkit-animation: scale-animation 1s ease-out 0.2s infinite normal;
+        -moz-animation: scale-animation 1s ease-out 0.2s infinite normal;
+        animation: scale-animation 1s ease-out 0.2s infinite normal;
+      }
+
+      .timer-ring-one {
+        position: absolute;
+        height: 140px;
+        width: 140px;
+        border-radius: 50%;
+        background-color: rgba($color: $moody-blue, $alpha: 0.6);
+      }
+      .timer-ring-two {
+        position: absolute;
+        height: 110px;
+        width: 110px;
+        border-radius: 50%;
+        background-color: rgba($color: $moody-blue, $alpha: 1);
+      }
+
+      .time {
+        @include generic-text($font-size-l, $medium, $font-size-l, $background);
+        z-index: 10;
+      }
+    }
+
+    .main-action-container {
+      .action-btn {
+        height: 40px;
+        width: 100px;
+      }
+      .action-btn:first-child {
+        margin-right: 18px;
+      }
+    }
+  }
+}
+
+.main-container-paused {
+  filter: blur(3px) brightness(0.9);
+}
+
+.paused-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+
+  .paused-menu {
+    @include align(true, true, absolute);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .label {
+      @include generic-text($font-size-xxl, $bold, $font-size-xxl);
+    }
+    .action-btn {
+      margin-top: 32px;
+      height: 80px;
+      width: 120px;
+
+      .play-icon {
+        transform: scale(2.5);
+      }
+    }
   }
 }

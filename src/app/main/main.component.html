@@ -1,7 +1,11 @@
-<div class="main-container">
+<div class="main-container" [ngClass]="{ 'main-container-paused': paused }">
   <div class="game-container">
     <div class="sudoku-container">
-      <app-sudoku class="sudoku" [noteFlag]="noteFlag"></app-sudoku>
+      <app-sudoku
+        class="sudoku"
+        [noteFlag]="noteFlag"
+        (gameCompletedEvent)="gameCompletedEvent()"
+      ></app-sudoku>
     </div>
     <div class="action-group">
       <button mat-raised-button class="action-btn" (click)="undoEvent()">
@@ -30,11 +34,47 @@
   </div>
   <div class="side-container">
     <div class="timer-container">
-      <div class="time"></div>
+      <div
+        class="timer-ring-one"
+        [ngClass]="{
+          'ring-animation': !paused && ringAnimation
+        }"
+      ></div>
+      <div
+        class="timer-ring-two"
+        [ngClass]="{
+          'inner-ring-animation': !paused && ringAnimation
+        }"
+      ></div>
+      <div class="time">
+        {{ timerDisplay }}
+      </div>
     </div>
     <div class="main-action-container">
-      <div class="paused">paused</div>
-      <div class="hint">hint</div>
+      <button mat-raised-button class="action-btn" (click)="togglePaused(true)">
+        <mat-icon>pause</mat-icon>
+      </button>
+
+      <button
+        mat-raised-button
+        class="action-btn"
+        [matBadge]="hintCount"
+        matBadgePosition="after"
+        matBadgeColor="accent"
+        [matBadgeHidden]="!showHintCount"
+        [disabled]="!showHintCount"
+        (click)="showHint()"
+      >
+        <mat-icon>lightbulb</mat-icon>
+      </button>
     </div>
+  </div>
+</div>
+<div class="paused-container" *ngIf="paused">
+  <div class="paused-menu">
+    <div class="label">Paused</div>
+    <button mat-raised-button class="action-btn" (click)="togglePaused(false)">
+      <mat-icon class="play-icon">play_arrow</mat-icon>
+    </button>
   </div>
 </div>
