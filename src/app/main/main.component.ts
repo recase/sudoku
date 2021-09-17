@@ -7,6 +7,10 @@ import {
 } from '@angular/core';
 import { SudokuComponent } from './components/sudoku/sudoku.component';
 import { Subscription, timer } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { CompleteModalComponent } from './modals/complete-modal/complete-modal.component';
+import { TimeToStringService } from '../services/time-to-string.service';
+import { TimeRecord } from '../interfaces/interface';
 
 @Component({
   selector: 'app-main',
@@ -24,6 +28,7 @@ export class MainComponent implements OnInit, OnDestroy {
   public paused: boolean = false;
   public ringAnimation: boolean = true;
   public gameCompletedFlag: boolean = false;
+  public timeRecord: TimeRecord = { easy: 0, difficult: 0 };
 
   private timerSubscription!: Subscription;
 
@@ -33,10 +38,21 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor() {}
+  constructor(
+    private dialog: MatDialog,
+    private timeService: TimeToStringService
+  ) {}
 
   ngOnInit(): void {
     this.timeClock();
+    this.getTimeRecord();
+  }
+
+  private getTimeRecord() {
+    const data = localStorage.getItem('timeRecord');
+    if (data) {
+      this.timeRecord = JSON.parse(data);
+    }
   }
 
   public inputEvent(num: number) {
@@ -71,35 +87,36 @@ export class MainComponent implements OnInit, OnDestroy {
   public gameCompletedEvent() {
     this.gameCompletedFlag = true;
     this.ringAnimation = false;
+    this.showCompletedModal();
+    this.saveBestTime();
+  }
+
+  private saveBestTime() {
+    if (!this.timeRecord.easy) {
+      this.timeRecord.easy = this.time;
+    } else if (this.time < this.timeRecord.easy) {
+      this.timeRecord.easy = this.time;
+    }
+  }
+
+  private showCompletedModal() {
+    this.dialog.open(CompleteModalComponent, {
+      data: {
+        time: this.time,
+        bestTime: this.time,
+      },
+      panelClass: 'complete-modal',
+      disableClose: true,
+    });
   }
 
   private timeClock() {
     this.timerSubscription = timer(0, 1000).subscribe(() => {
       if (!this.paused && !this.gameCompletedFlag) {
         this.time++;
-        this.timerDisplay = this.getDisplayTimer(this.time);
+        this.timerDisplay = this.timeService.getDisplayTimer(this.time);
       }
     });
-  }
-
-  private getDisplayTimer(time: number): string {
-    const hours = '0' + Math.floor(time / 3600);
-    const minutes = '0' + Math.floor((time % 3600) / 60);
-    const seconds = '0' + Math.floor((time % 3600) % 60);
-
-    let hourValue = null;
-    if (hours !== '00') {
-      hourValue = `${hours.slice(-2, -1)}${hours.slice(-1)}:`;
-    }
-
-    const stringValue = `${minutes.slice(-2, -1)}${minutes.slice(
-      -1
-    )}:${seconds.slice(-2, -1)}${seconds.slice(-1)}s`;
-
-    if (hourValue) {
-      return hourValue + stringValue;
-    }
-    return stringValue;
   }
 
   ngOnDestroy() {
